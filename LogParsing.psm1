@@ -17,6 +17,7 @@ enum Severity {
     verbose = 4
     debug = 5
 }
+
 class LogEntry{
     [string] $Message
     [string] $Component
@@ -25,21 +26,24 @@ class LogEntry{
     [PSCustomObject] $details
     [Severity] $severity = 1
 }
-class LogDetails 
-{
-    LogDetails (){
-        $this.LogEntry = new-object Collections.arraylist
-    }
+
+class LogDetails {
     [int] $StreamReaderPosition
     [string] $type
     [Collections.arraylist] $LogEntry
     [string]$logParsingParams
+
+    LogDetails (){
+        $this.LogEntry = new-object Collections.arraylist
+    }
+    
 }
 #endregion
 
 #region add commands
 if (Test-Path -Path $PSScriptRoot\Commands\){
     $Commands = Get-ChildItem -Path $PSScriptRoot\Commands\*.ps1 -file -Recurse
+    
     Foreach($CMD in $Commands){
 	    Write-Verbose -Message "Cmdlet File: $CMD"  
 	    . $CMD
@@ -50,6 +54,7 @@ if (Test-Path -Path $PSScriptRoot\Commands\){
 #region add internal commands
 if (Test-Path -Path $PSScriptRoot\PrivateCommands\){
     $Commands = Get-ChildItem -Path $PSScriptRoot\PrivateCommands\*.ps1 -file -Recurse
+    
     Foreach($CMD in $Commands){
 	    Write-Verbose -Message "Cmdlet File: $CMD"  
 	    . $CMD
