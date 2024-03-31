@@ -17,23 +17,28 @@ CMXML
 .LINK
 http://www.JPScripter.com
 #>
-    param(
+    param (
         [parameter(Mandatory=$true,ValueFromPipeline)]
         [System.IO.FileInfo]$File
     )
-    Begin{
+    
+    Begin {
+        $MECMPattern = '\<\!\[LOG\[(?<Message>.*)?\]LOG\]\!\>\<time=\"(?<Time>.+)(?<TZAdjust>[+|-])(?<TZOffset>\d{2,3})\"\s+date=\"(?<Date>.+)?\"\s+component=\"(?<Component>.+)?\"\s+context="(?<Context>.*)?\"\s+type=\"(?<Type>\d)?\"\s+thread=\"(?<TID>\d+)?\"\s+file=\"(?<Reference>.+)?\"\>'
         $CMpattern = '(.*)\$\$<(.*)><(.*)><thread=([0-9]*).*>'
         $XMLpattern = '<\!\[LOG\[(.*)]LOG]\!>'
         $IISPattern = 'Internet Information Services'
         $MSIPattern = 'MSI\s\(.\)\s\(.*\)\s\[[\d:]*\]:'
     }
+
     Process {
+
         #wait-debugger
         if (-not $file.Exists){
             Write-Warning -Message "File not found: $($File.Fullname)"
             return
         }
-        if (-not $script:LogFiles.contains($File.FullName)){
+        
+        if (-not $script:LogFiles.contains($File.FullName)) {
             #Get First line for match
             $fs = [System.IO.FileStream]::new($File.fullname, 'Open', 'Read', [System.IO.FileShare]::ReadWrite + [System.IO.FileShare]::Delete)
             $sr = [System.IO.StreamReader]::new($fs);
@@ -41,14 +46,22 @@ http://www.JPScripter.com
             #Find Type
             # we loop here in case where is a header to the log that needs to be ingored.
             $logType = 'unknown'
-            for($i = 0; $i -lt 50; $i++){
+
+            for ($i = 0; $i -lt 50; $i++){
                 #break if we know what it is
-                if ($logType -ne 'unknown'){Break}
+                if ($logType -ne 'unknown'){
+                    Break
+                }
 
                 $Line = $sr.ReadLine()
                 # Fine type
                 $LogType = $null
+
                 Switch -regex ($line)  {
+                    $MECMPattern {
+                        $logType = 'MECM'
+                        Break
+                    }
                     $CMpattern {
                         $logType = 'CM'
                         Break
@@ -69,6 +82,7 @@ http://www.JPScripter.com
                         $logType = 'unknown'
                     }
                 }
+
                 #break for end of file
                 if ($sr.EndOfStream){
                     Break
@@ -76,14 +90,18 @@ http://www.JPScripter.com
             }
 
             #Make memory Object
-            $LogDetails = new-object -TypeName LogDetails 
+            #$LogDetails = new-object -TypeName LogDetails
+            $LogDetails = [LogDetails]::new()
             $LogDetails.Type = $logtype
+
             $sr.close()
             $sr.Dispose()
+
             $FS.Close()
             $FS.Dispose()
+
             $LogDetails.StreamReaderPosition = 0
-            $script:LogFiles.add($File.FullName,$LogDetails)
+            $script:LogFiles.add($File.FullName, $LogDetails)
         
         }
     }

@@ -26,27 +26,33 @@ http://www.JPScripter.com
 
     Process {
         $Statuses = @('error','warning','verbose','debug','information')
+        
         #Headers
         foreach($status in $statuses){
             $keywords = get-variable -name "$($status)Keywords" -scope script -ValueOnly
+
             foreach($Word in $keywords){
                 if ($Message -like "$Word*"){
                     return [Severity]$status
                 }
             }
         }
+
         #Parsing full message with regex
         foreach($status in $statuses){
             $keywords = get-variable -name "$($status)Keywords" -scope script -ValueOnly
+
             foreach($Word in $keywords){
                 if ($Message -imatch $Word){
                     return [Severity]$status
                 }
             }
         }
+
         return [Severity]::normal
 
     }
+    
     End {
     }
 }

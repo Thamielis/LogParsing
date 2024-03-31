@@ -24,16 +24,18 @@ Get-CredentialToken -Credential $Cred
 http://www.JPScripter.com
 
 #>
-    param(
+    param (
         [parameter(Mandatory=$true,ValueFromPipeline)]
         [System.IO.FileInfo]$File,
         [switch] $AllDetails,
         [switch] $NewContentOnly
     )
+
     Begin{
         $DatePattern = '\d{1,2}[\/]\d{1,2}[\/]\d{4}'
         $IISFieldsPattern = '#Fields:(.*)'
     }
+
     Process {
         #wait-debugger
         if (-not $file.Exists){
@@ -50,7 +52,7 @@ http://www.JPScripter.com
         if ($NewContentOnly.IsPresent){
             if ($script:LogFiles[$File.FullName].StreamReaderPosition -eq $sr.BaseStream.length){
                 return
-            }elseif($script:LogFiles[$File.FullName].StreamReaderPosition -lt $sr.BaseStream.length){
+            } elseif($script:LogFiles[$File.FullName].StreamReaderPosition -lt $sr.BaseStream.length){
                 $sr.BaseStream.Position = $script:LogFiles[$File.FullName].StreamReaderPosition
             }
         }
@@ -64,7 +66,11 @@ http://www.JPScripter.com
                 AllDetails = $AllDetails.IsPresent
                 LogContent = $LogContent
             }
-            switch ($LogType){
+            
+            switch ($LogType) {
+                'MECM' {
+                    $logEntries = Get-LogEntryFromMECM @LogSplat
+                }
                 'CMXML' {
                     $logEntries = Get-LogEntryFromCMXML @LogSplat
                 }
@@ -107,6 +113,7 @@ http://www.JPScripter.com
         $FS.Close()
         $FS.Dispose()
     }
+    
     End {
     }
 }

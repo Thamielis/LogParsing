@@ -1,0 +1,154 @@
+{
+    "Logs": {
+        "Agent Setup"           : {
+            "Filename": "ccmsetup.log",
+            "Filepath": "Windows\\ccmsetup\\logs",
+            "Category": "",
+            "Description": "Provides information about client-based operating system actions. Can be used to troubleshoot client installation problems."
+        },
+        "Scripts Endpoint"           : {
+            "Filename": "Scripts.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "",
+            "Description": "Provides information about Script execution."
+        },
+        "Client Status Evaluation": {
+            "Filename": "CcmEval.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "General",
+            "Description": "Records Configuration Manager client status evaluation activities"
+        },
+        "Application Deployment": {
+            "Filename": "AppEnforce.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "Application",
+            "Description": "Records details about enforcement actions (install and uninstall) taken for applications on the client."
+        },
+        "Application Detection" : {
+            "Filename": "AppDiscovery.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "Application",
+            "Description": "Records details about the discovery or detection of applications on client computers."
+        },
+        "Task Sequence"         : {
+            "Filename": "smsts.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "",
+            "Description": "General location for all operating system deployment and task sequence log events."
+        },
+        "Patching Deployment"         : {
+            "Filename": "UpdatesDeployment.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "General",
+            "Description": "Provides information about the deployment on the client, including software update activation, evaluation, and enforcement. Verbose logging shows additional information about the interaction with the client user interface."
+        },
+        "WSUS Agent Health"         : {
+            "Filename": "WUAHandler.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "Software Updates",
+            "Description": "Provides information about when the Windows Update Agent on the client searches for software updates."
+        },
+        "Data Transfer Service"         : {
+            "Filename": "DataTransferService.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "Content",
+            "Description": "Records all BITS communication for policy or package access."
+        },
+        "Client Location"         : {
+            "Filename": "ClientLocation.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "General",
+            "Description": "Site assignment tasks."
+        },
+        "Location Service"         : {
+            "Filename": "LocationServices.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "General",
+            "Description": "Records the client activity for locating management points, software update points, and distribution points."
+        },
+        "SMS Agent Activities"         : {
+            "Filename": "Ccmexec.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "General",
+            "Description": "Records activities of the client and the SMS Agent Host service."
+        },
+        "Client Agent Status"         : {
+            "Filename": "StatusAgent.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "General",
+            "Description": "Logs status messages that are created by the client components."
+        },
+        "Content Transfer Manager"         : {
+            "Filename": "ContentTransferManager.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "Content",
+            "Description": "Schedules the Background Intelligent Transfer Service (BITS) or the Server Message Block (SMB) to download or to access SMS packages."
+        },
+        "Running Advertisements"         : {
+            "Filename": "Execmgr.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "Application",
+            "Description": "Records advertisements that run."
+        },
+        "SMB Package Access Tasks"         : {
+            "Filename": "FileBITS.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "Content",
+            "Description": "Records all SMB package access tasks."
+        },
+        "Client Repair Activities"         : {
+            "Filename": "CcmRepair.log",
+            "Filepath": "Windows\\CCM\\logs",
+            "Category": "Install",
+            "Description": "Records the repair activities of the client agent"
+        }
+    },
+    "Codes": [
+        {
+            "Severity"  : "Error",
+            "Hex"       : "0xc190020e",
+            "Dec"       : 3247440398,
+            "Short"      : "Low space on Systemdrive",
+            "Info"      : "",
+            "Resolution": "",
+            "Url"       : "https://exotips.com/de/so-beheben-sie-den-fehler-0xc190020e-unter-windows-10"
+        },
+        {
+            "Severity"  : "Error",
+            "Hex"       : "0xc19001df",
+            "Dec"       : "",
+            "Short"      : "Low space on Systemdrive",
+            "Info"      : "The most significant reason behind the occurrence of 0xc19001df error code is the insufficient storage in the system.",
+            "Resolution": "The installation of Windows 10 requires 13 Gigabytes of free space in the computer system and if the computer has less memory then it throws an above-described error message.",
+            "Url"       : "https://www.techyv.com/questions/the-issue-started-today-with-downloading-the-latest-windows-version-and-0xc19001df-error-occurred/"
+        },
+        {
+            "Severity"  : "Error",
+            "Hex"       : "80004005",
+            "Dec"       : "",
+            "Short"      : "Unspecified error",
+            "Info"      : "The Task Sequence Error 0x80004005 is generic, and the solution could be different based on the details you get into logs.",
+            "Resolution": "",
+            "Url"       : "https://www.anoopcnair.com/sccm-task-sequence-error-0x80004005/"
+        },
+        {
+            "Severity"  : "Error",
+            "Hex"       : "0x80004004",
+            "Dec"       : "",
+            "Short"      : "Operation abortet",
+            "Info"      : "",
+            "Resolution": "",
+            "Url"       : ""
+        },
+        {
+            "Severity"  : "Error",
+            "Hex"       : "0x80070002",
+            "Dec"       : "",
+            "Short"      : "The system cannot find the file specified.",
+            "Info"      : "",
+            "Resolution": "",
+            "Url"       : ""
+        }
+    ]
+    
+}

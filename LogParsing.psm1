@@ -1,11 +1,11 @@
 #region settings
 $script:LogFiles = @{}
 $script:CacheLogs = $false
-$script:ErrorKeywords = @('fail','error[:\s]', 'unsuccessful')
+$script:ErrorKeywords = @('fail', 'error[:\s]', 'unsuccessful')
 $script:WarningKeywords = @('warning')
 $script:DebugKeywords = @('debug')
 $script:VerboseKeywords = @('verbose')
-$script:InformationKeywords = @('info','STATMSG')
+$script:InformationKeywords = @('info', 'STATMSG')
 #endregion
 
 #region classes
@@ -18,7 +18,7 @@ enum Severity {
     debug = 5
 }
 
-class LogEntry{
+class LogEntry {
     [string] $Message
     [string] $Component
     [DateTime] $Datetime
@@ -33,31 +33,32 @@ class LogDetails {
     [Collections.arraylist] $LogEntry
     [string]$logParsingParams
 
-    LogDetails (){
-        $this.LogEntry = new-object Collections.arraylist
+    LogDetails () {
+        #$this.LogEntry = new-object Collections.arraylist
+        $this.LogEntry = [System.Collections.ArrayList]::new()
     }
     
 }
 #endregion
 
 #region add commands
-if (Test-Path -Path $PSScriptRoot\Commands\){
+if (Test-Path -Path $PSScriptRoot\Commands\) {
     $Commands = Get-ChildItem -Path $PSScriptRoot\Commands\*.ps1 -file -Recurse
     
-    Foreach($CMD in $Commands){
-	    Write-Verbose -Message "Cmdlet File: $CMD"  
-	    . $CMD
+    Foreach ($CMD in $Commands) {
+        Write-Verbose -Message "Cmdlet File: $CMD"  
+        . $CMD
     }
 }
 #endregion
 
 #region add internal commands
-if (Test-Path -Path $PSScriptRoot\PrivateCommands\){
+if (Test-Path -Path $PSScriptRoot\PrivateCommands\) {
     $Commands = Get-ChildItem -Path $PSScriptRoot\PrivateCommands\*.ps1 -file -Recurse
     
-    Foreach($CMD in $Commands){
-	    Write-Verbose -Message "Cmdlet File: $CMD"  
-	    . $CMD
+    Foreach ($CMD in $Commands) {
+        Write-Verbose -Message "Cmdlet File: $CMD"  
+        . $CMD
     }
 }
 #endregion
