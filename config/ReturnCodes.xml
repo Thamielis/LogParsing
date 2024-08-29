@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ReturnCodes>
+    <ReturnCode Id="0" module="ConfigMgr" component="ccmsetup" name="Success" />
+    <ReturnCode Id="6" module="ConfigMgr" component="ccmsetup" name="Error" />
+    <ReturnCode Id="7" module="ConfigMgr" component="ccmsetup" name="Reboot required" />
+    <ReturnCode Id="8" module="ConfigMgr" component="ccmsetup" name="Setup already running" />
+    <ReturnCode Id="9" module="ConfigMgr" component="ccmsetup" name="Prerequisite evaluation failure" />
+    <ReturnCode Id="10" module="ConfigMgr" component="ccmsetup" name="Setup manifest hash validation failure" />
+</ReturnCodes>

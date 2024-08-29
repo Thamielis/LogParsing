@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param (
     [Parameter()]
-    [String] $ComputerName = "LP532"
+    [String] $ComputerName = "LP732"
 )
 
 Import-Module "$PSScriptRoot\LogParsing.psd1" -Force
@@ -11,8 +11,8 @@ if (Test-Path -Path .\variablelibrary.json) {
     $CMLogVars = (Get-Content -Path .\variablelibrary.json -Raw | ConvertFrom-Json -Depth 20).Logs
 }
 
-$CMLogResults = [Ordered]@{}
-$CMLogErrors = [Ordered]@{}
+$CMLogResults = @{}
+$CMLogErrors = @{}
 
 foreach ($CMLog in $CMLogVars.PSObject.Members | Where-Object MemberType -like 'NoteProperty') {
     $LogName = $CMLog.Name
@@ -20,20 +20,20 @@ foreach ($CMLog in $CMLogVars.PSObject.Members | Where-Object MemberType -like '
     $LogFilePath = $CMLogVars.$LogName.Filepath
     $LogFile = Join-Path -Path "\\$ComputerName\c$" -ChildPath $LogFilePath -AdditionalChildPath $LogFileName
 
-    $LogResults = Get-Log -File $LogFile -AllDetails | Sort-Object -Property DateTime -Descending
+    $LogResults = Get-Log -File $LogFile -AllDetails
 
-    $Errors = [PSCustomObject]$LogResults | Where-Object { $_.severity -eq 'Error' } #| Sort-Object -Property DateTime
+    $Errors = [PSCustomObject]$LogResults | Where-Object { $_.severity -eq 'Error' }  | Sort-Object -Property DateTime
 
-    $CMLogResult = [Ordered]@{
-        All         = $LogResults #| Sort-Object -Property DateTime -Descending
-        Normal      = [PSCustomObject]$LogResults | Where-Object { $_.severity -eq 'normal' } #| Sort-Object -Property DateTime -Descending
-        Information = [PSCustomObject]$LogResults | Where-Object { $_.severity -eq 'information' }  #| Sort-Object -Property DateTime -Descending
-        Warnings    = [PSCustomObject]$LogResults | Where-Object { $_.severity -eq 'Warning' }  #| Sort-Object -Property DateTime -Descending
+    $CMLogResult = [PSCustomObject]@{
+        All         = [PSCustomObject]$LogResults | Sort-Object -Property DateTime
+        Normal      = [PSCustomObject]$LogResults | Where-Object { $_.severity -eq 'normal' } | Sort-Object -Property DateTime
+        Information = [PSCustomObject]$LogResults | Where-Object { $_.severity -eq 'information' }  | Sort-Object -Property DateTime
+        Warnings    = [PSCustomObject]$LogResults | Where-Object { $_.severity -eq 'Warning' }  | Sort-Object -Property DateTime
         Errors      = $Errors
     }
 
     if ($null -ne $Errors) {
-        $CMLogErrors[$LogName] = $Errors | Sort-Object -Property Message -Unique
+        $CMLogErrors[$LogName] = $Errors
     }
     
     $CMLogResults[$LogName] = $CMLogResult #[PSCustomObject]$LogResults
